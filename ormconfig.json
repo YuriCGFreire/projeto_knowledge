@@ -1,0 +1,20 @@
+{
+   "type": "postgres",
+   "host": "localhost",
+   "port": 3000,
+   "username": "postgres",
+   "password": "1324",
+   "database": "projeto_knowledge",
+   "synchronize": true,
+   "logging": false,
+   "entities": [
+       "src/models/**/*.ts"
+   ],
+   "migrations": [
+       "src/database/migrations/**/*.ts"
+   ],
+   "cli":{
+       "migrationsDir": "src/database/migrations",
+       "entitiesDir": "src/models"
+   }
+}
