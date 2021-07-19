@@ -3,7 +3,7 @@
    "host": "localhost",
    "port": 3000,
    "username": "postgres",
-   "password": "1324",
+   "password": "1234",
    "database": "projeto_knowledge",
    "synchronize": true,
    "logging": false,
