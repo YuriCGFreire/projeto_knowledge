@@ -3,3 +3,5 @@ import { userRouter } from "./userRouter";
 const routes = Router()
 
 routes.use("/user", userRouter)
+
+export {routes}
