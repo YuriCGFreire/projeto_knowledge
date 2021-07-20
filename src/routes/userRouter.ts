@@ -3,6 +3,6 @@ import { Router } from "express"
 const userRouter = Router()
 const usersController = new UsersController()
 
-userRouter.get('/:name', usersController.findUser)
+userRouter.post('/', usersController.save)
 
 export {userRouter}
