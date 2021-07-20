@@ -17,7 +17,7 @@ export class Article{
     image_url!: string;
 
     @Column()
-    content!: Binary;
+    content!: string;
 
     @JoinColumn({ name: "user_id" })
     @ManyToOne(type => User, type => Article)
