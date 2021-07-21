@@ -5,5 +5,6 @@ const usersController = new UsersController()
 
 userRouter.post('/', usersController.save)
 userRouter.get('/', usersController.getAllUsers)
+userRouter.get('/:email', usersController.getByEmail)
 
 export {userRouter}
