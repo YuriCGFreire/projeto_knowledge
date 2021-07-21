@@ -20,8 +20,15 @@ export class UsersController {
         }
     }
 
-/*     async getAllUsers(req: Request, res: Response): Promise<Response>{
-
-    } */
+    async getAllUsers(req: Request, res: Response): Promise<Response>{
+        const usersService = new UsersService()
+        try{
+            const users = await usersService.getAllUsers()
+            return res.json(users)
+        }catch(err){
+            return res.json(err.message)
+        }
+        
+    }
 
 }
