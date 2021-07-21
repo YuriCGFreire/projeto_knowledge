@@ -50,10 +50,19 @@ export class UsersService{
     //criar método getAllUsers, updateUser, getUserByEmail
 
     async getAllUsers(){
-        const allUsers = this.usersRepository.find({
+        const allUsers = await this.usersRepository.find({
             select: ["name", "email", "admin", "id"]
         })
 
         return allUsers
+    }
+
+    async getByEmail(email: string){
+        const user = await this.usersRepository.find({
+            select: ["name", "email", "admin", "id"],
+            where: {email}
+        })
+
+        return user
     }
 }
