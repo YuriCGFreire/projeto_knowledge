@@ -1,5 +1,5 @@
 import { UserRepository,} from "../repositories/UserRepository";
-import {Repository, getCustomRepository} from "typeorm"
+import {Repository, getCustomRepository, getConnection} from "typeorm"
 import { User } from "../models/User";
 import { validate } from "class-validator";
 
@@ -58,6 +58,22 @@ export class UsersService{
     }
 
     async getByEmail(email: string){
+        const user = await this.usersRepository.find({
+            select: ["name", "email", "admin", "id"],
+            where: {email}
+        })
+
+        return user
+    }
+
+    async updateUser({name, email}: IUserInterface){
+        await this.usersRepository
+            .createQueryBuilder()
+            .update(User)
+            .set({name: name, email: email})
+            .where({email})
+            .execute()
+
         const user = await this.usersRepository.find({
             select: ["name", "email", "admin", "id"],
             where: {email}
