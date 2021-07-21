@@ -4,5 +4,6 @@ const userRouter = Router()
 const usersController = new UsersController()
 
 userRouter.post('/', usersController.save)
+userRouter.get('/', usersController.getAllUsers)
 
 export {userRouter}
