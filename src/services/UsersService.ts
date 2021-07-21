@@ -1,12 +1,13 @@
 import { UserRepository,} from "../repositories/UserRepository";
 import {Repository, getCustomRepository} from "typeorm"
-import { validate } from "class-validator";
 import { User } from "../models/User";
+import { validate } from "class-validator";
 
-interface IUsersInterface{
-    name: string,
+interface IUserInterface{
+    name: string, 
     email: string,
-    password: string
+    password: string,
+    admin: boolean
 }
 
 export class UsersService{
@@ -16,7 +17,7 @@ export class UsersService{
         this.usersRepository = getCustomRepository(UserRepository)
     }
 
-    async create({name, email, password}: IUsersInterface){
+    async create({name, email, password, admin}: IUserInterface){
 
         const userExists = await this.usersRepository.findOne({ email })
         if(userExists){
@@ -24,17 +25,28 @@ export class UsersService{
             return msg
         }
 
+        
         const user = this.usersRepository.create({
             name,
             email, 
-            password
+            password,
+            admin
         })
 
         const errors = await validate(user)
+
         if(errors.length == 0){
             await this.usersRepository.save(user)
-            return user
+            const returnedUser = {
+                id: user.id,
+                name: user.name,
+                email: user.email,
+                admin: user.admin
+            }
+            return returnedUser
+        }else{
+            return errors
         }
-
+        
     }
 }
