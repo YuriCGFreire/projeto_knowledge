@@ -1,15 +1,15 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm"
-import {v4 as uuid} from "uuid"
 import { IsEmail, MaxLength, MinLength } from "class-validator"
+import {v4 as uuid} from "uuid"
 
-@Entity()
+@Entity("users")
 export class User{
     @PrimaryColumn()
     id!: string;
 
     @Column()
-    @MinLength(3, {message: "Um nome precisa ter pelo menos 3 carácteres."})
-    @MaxLength(50, {message: "Um nome precisa ter no max 50 carácteres."})
+    @MinLength(3, {message: "Não atende a quantidade mínima de 3 carácteres."})
+    @MaxLength(50, {message: "Ultrapassou a quantidade máxima de carácteres."})
     name!: string;
 
     @Column()
@@ -17,7 +17,7 @@ export class User{
     email!: string;
 
     @Column()
-    @MinLength(6, {message: "A senha precisa ter no mínimo 6 carácteres."})
+    @MinLength(8, {message: "Não atende a quantidade mínima de 8 carácteres."})
     password!: string;
 
     @Column()
