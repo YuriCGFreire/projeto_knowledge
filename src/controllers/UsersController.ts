@@ -31,4 +31,15 @@ export class UsersController {
         
     }
 
+    async getByEmail(req: Request, res: Response): Promise<Response>{
+        const {email} = req.params
+        const usersService = new UsersService()
+        try{
+            const user = await usersService.getByEmail(email)
+            return res.json(user)
+        }catch(err){
+            return res.json(err.message)
+        }
+    }
+
 }
