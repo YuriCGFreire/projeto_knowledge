@@ -20,6 +20,8 @@ export class UsersController {
         }
     }
 
-    
+/*     async getAllUsers(req: Request, res: Response): Promise<Response>{
+
+    } */
 
 }
