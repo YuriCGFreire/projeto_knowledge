@@ -37,18 +37,23 @@ export class UsersService{
 
         if(errors.length == 0){
             await this.usersRepository.save(user)
-            const returnedUser = {
-                id: user.id,
-                name: user.name,
-                email: user.email,
-                admin: user.admin
-            }
-            return returnedUser
+            const savedUser = await this.usersRepository.findOne({
+                select: ["name", "email", "admin", "id"],
+                where: {email}
+            })
+            return savedUser
         }else{
             return errors
         }
         
     }
-
     //criar método getAllUsers, updateUser, getUserByEmail
+
+    async getAllUsers(){
+        const allUsers = this.usersRepository.find({
+            select: ["name", "email", "admin", "id"]
+        })
+
+        return allUsers
+    }
 }
