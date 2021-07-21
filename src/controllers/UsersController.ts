@@ -4,7 +4,7 @@ import { UsersService } from "../services/UsersService";
 export class UsersController {
 
     async save(req: Request, res: Response): Promise<Response>{
-        const { name, email, password, admin = null } = req.body
+        const { name, email, password, admin = false } = req.body
         const usersService = new UsersService()
         try{
             const user = await usersService.create({name, email, password, admin})
