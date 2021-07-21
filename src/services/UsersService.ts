@@ -49,4 +49,6 @@ export class UsersService{
         }
         
     }
+
+    //criar método getAllUsers, updateUser, getUserByEmail
 }
