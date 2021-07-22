@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm"
 import { v4 as uuid } from "uuid"
 import { MaxLength, MinLength } from "class-validator"
 
@@ -13,12 +13,11 @@ export class Category{
     @MaxLength(50, {message: "Ultrapassou a quantidade máxima de 50 carácteres."})
     name!: string;
 
-    @JoinColumn({name: "parent_id"})
-    @OneToOne(type => Category)
-    user!: Category;
+    @OneToMany(type => Category, category => category.parent_id)
+    childCategories!: Category[];
 
-    @Column()
-    parent_id!: string;
+    @ManyToOne(type => Category, category => category.childCategories)
+    parent_id!: Category;
 
     @CreateDateColumn()
     created_at!: Date;
