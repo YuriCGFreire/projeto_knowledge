@@ -32,7 +32,30 @@ export class CategoriesService {
 
     async remove (id: string){
 
-        
+        const subCategory = await this.categoryRepository.find({
+            select: ["parent_id"],
+            where: {parent_id: id}
+        })
 
+        //conts article 
+
+        if(subCategory.length != 0){
+            const msg = "Categoria possui subcategorias."
+            return msg
+        }else{
+            const msg = "Categoria deletada."
+            
+            await this.categoryRepository
+                .createQueryBuilder()
+                .delete()
+                .from(Category)
+                .where({id})
+                .execute()
+    
+            return msg
+
+        }
+        //Depois implementar a verificação de artigos, antes de poder deletar a categoria.
+        //Obs: Implementar antes do else     
     }
 }
