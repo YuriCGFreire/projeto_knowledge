@@ -42,4 +42,17 @@ export class UsersController {
         }
     }
 
+    async updateUser(req: Request, res: Response): Promise<Response>{
+        const { name, email } = req.body
+        const {id} = req.params
+        const usersService = new UsersService()
+        try{
+            const updatedUser = await usersService.updateUser(name, email, id)
+            return res.json(updatedUser)
+        }catch(err){
+            return res.json(err.message)
+        }
+
+    }
+
 }
