@@ -33,7 +33,7 @@ export class CreateCategories1626724787970 implements MigrationInterface {
             ],
             foreignKeys: [
                 {
-                    name: "parenId",
+                    name: "FKCategory",
                     referencedTableName:"categories",
                     referencedColumnNames: ["id"], 
                     columnNames: ["parent_id"],
