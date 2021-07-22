@@ -13,11 +13,11 @@ export class Category{
     @MaxLength(50, {message: "Ultrapassou a quantidade máxima de 50 carácteres."})
     name!: string;
 
-    @OneToMany(type => Category, category => category.parent_id)
-    childCategories!: Category[];
-
     @ManyToOne(type => Category, category => category.childCategories)
     parent_id!: Category;
+
+    @OneToMany(type => Category, category => category.parent_id)
+    childCategories!: Category[];
 
     @CreateDateColumn()
     created_at!: Date;
