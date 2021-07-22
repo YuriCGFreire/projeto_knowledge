@@ -24,7 +24,6 @@ export class UsersService{
             const msg = `Usuário já cadastrado.`
             return msg
         }
-
         
         const user = this.usersRepository.create({
             name,
