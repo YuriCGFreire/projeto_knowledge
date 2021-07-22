@@ -4,5 +4,6 @@ const categoryRouter = Router()
 const categoriesController = new CategoriesController()
 
 categoryRouter.post("/", categoriesController.save)
+categoryRouter.delete("/:id", categoriesController.delete)
 
 export {categoryRouter}
