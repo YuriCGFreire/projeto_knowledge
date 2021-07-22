@@ -16,4 +16,15 @@ export class CategoriesController {
 
     }
 
+    async delete(req: Request, res: Response): Promise<Response>{
+        const {id} = req.params
+        const categoriesService = new CategoriesService()
+        try{
+            await categoriesService.remove(id)
+            return res.json("Categoria deletada.")
+        }catch(err){
+            return res.json(err.message)
+        }
+    }
+
 }
