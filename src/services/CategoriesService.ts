@@ -12,7 +12,7 @@ export class CategoriesService {
 
     async create(name: string){
 
-        const categoryExists = await this.categoryRepository.find({ name })
+        const categoryExists = await this.categoryRepository.findOne({ name })
         if(categoryExists){
             const msg = "Categoria já cadastrada."
             return msg
@@ -26,7 +26,13 @@ export class CategoriesService {
             return category
         }else{
             return errors
-        }
+        } 
+
+    }
+
+    async remove (id: string){
+
+        
 
     }
 }
