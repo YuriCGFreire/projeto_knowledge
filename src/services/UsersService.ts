@@ -1,5 +1,5 @@
 import { UserRepository,} from "../repositories/UserRepository";
-import {Repository, getCustomRepository, getConnection} from "typeorm"
+import {Repository, getCustomRepository} from "typeorm"
 import { User } from "../models/User";
 import { validate } from "class-validator";
 
