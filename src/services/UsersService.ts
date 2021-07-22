@@ -66,12 +66,12 @@ export class UsersService{
         return user
     }
 
-    async updateUser({name, email}: IUserInterface){
+    async updateUser(name: string, email:string, id: string){
         await this.usersRepository
             .createQueryBuilder()
             .update(User)
             .set({name: name, email: email})
-            .where({email})
+            .where({id})
             .execute()
 
         const user = await this.usersRepository.find({
