@@ -14,13 +14,14 @@ export class CategoriesService {
         this.articleRepository = getCustomRepository(ArticleRepository)
     }
 
-    async create(name: string){
-        const categoryExists = await this.categoryRepository.findOne({ name })
+    async create(objCategory: Object, name: Object){
+        const categoryExists = await this.categoryRepository.findOne(name)
+
         if(categoryExists){
             const msg = "Categoria já cadastrada."
             return msg
         }
-        const category = this.categoryRepository.create({name})
+        const category = this.categoryRepository.create(objCategory)
         const errors = await validate(category)
         if(errors.length == 0){
             await this.categoryRepository.save(category)
@@ -59,4 +60,6 @@ export class CategoriesService {
             return msg
         }   
     }
+
+    async withParent(categories: Array<Category>){}
 }
