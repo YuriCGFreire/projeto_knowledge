@@ -5,10 +5,10 @@ export class CategoriesController {
 
     async save(req: Request, res: Response): Promise<Response>{
 
-        const {name} = req.body
+        const objCategory = {...req.body}
         const categoriesService = new CategoriesService()
         try{
-            const category = await categoriesService.create(name)
+            const category = await categoriesService.create(objCategory, objCategory.name)
             return res.json(category)
         }catch(err){
             return res.json(err.message)
