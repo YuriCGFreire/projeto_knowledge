@@ -63,7 +63,7 @@ export class CategoriesService {
 
     withPath(categories: Array<Category>){
         const getParent = (categories: Array<Category>, parent_id:Object) => {
-            let parent = categories.filter(parent => parent.id === parent_id)
+            const parent = categories.filter(parent => parent.id === parent_id)
             return parent.length ? parent[0] : null
         }
 
@@ -87,4 +87,16 @@ export class CategoriesService {
 
         return categoriesWithPath
     }
+
+    async getCategories(){
+        const categories = await this.categoryRepository.find()
+        return this.withPath(categories)
+    }
+
+    async getById(id: string){
+        const category = await this.categoryRepository.findOne({id})
+        return category
+    }
+
+    //criar os metodos get (usando o metodo withpath), getbyid
 }
