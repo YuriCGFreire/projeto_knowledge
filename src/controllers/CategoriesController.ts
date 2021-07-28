@@ -27,4 +27,24 @@ export class CategoriesController {
         }
     }
 
+    async getCategories(req: Request, res: Response): Promise<Response>{
+        const categoriesService = new CategoriesService()
+        try{
+            const categories = await categoriesService.getCategories()
+            return res.json(categories)
+        }catch(err){
+            return res.json(err.message)
+        }
+    }
+
+    async getById(req: Request, res: Response): Promise<Response>{
+        const { id } = req.body
+        const categoriesService = new CategoriesService()
+        try{
+            const category = categoriesService.getById(id)
+            return res.json(category)
+        }catch(err){
+            return res.json(err.message)
+        }
+    }
 }
