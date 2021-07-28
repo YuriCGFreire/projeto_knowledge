@@ -61,5 +61,30 @@ export class CategoriesService {
         }   
     }
 
-    async withParent(categories: Array<Category>){}
+    withPath(categories: Array<Category>){
+        const getParent = (categories: Array<Category>, parent_id:Object) => {
+            let parent = categories.filter(parent => parent.id === parent_id)
+            return parent.length ? parent[0] : null
+        }
+
+        const categoriesWithPath = categories.map(category => {
+            let path = category.name
+            let parent = getParent(categories, category.parent_id)
+
+            while(parent){
+                path = `${parent.name} > ${path}`
+                parent = getParent(categories, parent.parent_id)
+            }
+
+            return {...category, path}
+        })
+
+        categoriesWithPath.sort((a, b) => {
+            if(a.path < b.path) return -1
+            if(a.path > b.path) return 1
+            return 0
+        })
+
+        return categoriesWithPath
+    }
 }
