@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm"
+import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm"
 import { v4 as uuid } from "uuid"
 import { Category } from "./Category";
 import { User } from "./User";
@@ -17,7 +17,7 @@ export class Article{
     @Column()
     image_url!: string;
 
-    @Column()
+    @Column({type: "text"})
     content!: string;
 
     @JoinColumn({ name: "user_id" })
