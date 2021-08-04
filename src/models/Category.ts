@@ -1,8 +1,9 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, Tree,Entity, PrimaryColumn, UpdateDateColumn, TreeParent, TreeChildren } from "typeorm"
 import { v4 as uuid } from "uuid"
 import { MaxLength, MinLength } from "class-validator"
 
 @Entity("categories")
+@Tree("closure-table")
 export class Category{
     
     @PrimaryColumn()
@@ -13,11 +14,11 @@ export class Category{
     @MaxLength(50, {message: "Ultrapassou a quantidade máxima de 50 carácteres."})
     name!: string;
 
-    @ManyToOne(type => Category, category => category.childCategories)
-    parent_id!: Category;
+    @TreeChildren()
+    child_categories!: Category[];
 
-    @OneToMany(type => Category, category => category.parent_id)
-    childCategories!: Category[];
+    @TreeParent()
+    parent_category!: Category;
 
     @CreateDateColumn()
     created_at!: Date;
