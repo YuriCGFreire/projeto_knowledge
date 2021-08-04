@@ -1,5 +1,6 @@
-import { Binary, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm"
 import { v4 as uuid } from "uuid"
+import { Category } from "./Category";
 import { User } from "./User";
 
 @Entity("articles")
@@ -20,18 +21,18 @@ export class Article{
     content!: string;
 
     @JoinColumn({ name: "user_id" })
-    @ManyToOne(type => User, type => Article)
+    @ManyToOne(type => User)
     user!: User;
 
     @Column()
     user_id!: string;
 
     @JoinColumn({ name: "category_id" })
-    @OneToOne(type => Article)
-    article!: string;
+    @OneToOne(type => Category)
+    category!: Category;
 
     @Column()
-    article_id!: string;
+    category_id!: string;
 
     @CreateDateColumn()
     created_at!: Date;
