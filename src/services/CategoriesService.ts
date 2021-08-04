@@ -58,9 +58,21 @@ export class CategoriesService {
     }
 
     async getById(id: string){
-        const category = await this.categoryRepository.findOne({id})
+        const category = await this.categoryRepository.findOne({
+            select: ["name", "id"],
+            where: {id}
+        })
         return category
     }
 
-    
+    async update(id: string, name: string){
+        const category = await this.categoryRepository
+            .createQueryBuilder()
+            .update(Category)
+            .set({name: name})
+            .where({id})
+            .execute()
+
+        return category
+    }
 }
