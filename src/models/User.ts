@@ -1,6 +1,8 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm"
 import { IsEmail, MaxLength, MinLength } from "class-validator"
 import {v4 as uuid} from "uuid"
+import { Coment } from "./Coment";
+import { Article } from "./Article";
 
 @Entity("users")
 export class User{
@@ -19,6 +21,14 @@ export class User{
     @Column()
     @MinLength(8, {message: "Não atende a quantidade mínima de 8 carácteres."})
     password!: string;
+
+    @OneToMany(type => Coment, user => User)
+    @JoinColumn()
+    coment!: Coment;
+
+    @OneToMany(type => Article, user => User)
+    @JoinColumn()
+    article!: Article;
 
     @Column()
     admin!: boolean;
