@@ -32,21 +32,12 @@ export class CategoriesService {
     }
 
     async remove (id: string){
-
-        const subCategory = await this.categoryRepository.find({
-            select: ["parent_category"],
-            where: {parent_category: id}
-        })
-
         const article = await this.articleRepository.find({
-            select: ["article_id"],
-            where: {article_id: id}
+            select: ["category_id"],
+            where: {category_id: id}
         })  
-
-        if(subCategory.length != 0){
-            const msg = "Categoria possui subcategorias."
-            return msg
-        }else if(article.length != 0){
+        
+        if(article.length != 0){
             const msg = "Categoria possui artigos."
             return msg
         }else{
@@ -61,36 +52,9 @@ export class CategoriesService {
         }   
     }
 
-    withPath(categories: Array<Category>){
-        const getParent = (categories: Array<Category>, parent_category:Object) => {
-            const parent = categories.filter(parent => parent.id === parent_category)
-            return parent.length ? parent[0] : null
-        }
-
-        const categoriesWithPath = categories.map(category => {
-            let path = category.name
-            let parent = getParent(categories, category.parent_category)
-
-            while(parent){
-                path = `${parent.name} > ${path}`
-                parent = getParent(categories, parent.parent_category)
-            }
-
-            return {...category, path}
-        })
-
-        categoriesWithPath.sort((a, b) => {
-            if(a.path < b.path) return -1
-            if(a.path > b.path) return 1
-            return 0
-        })
-
-        return categoriesWithPath
-    }
-
     async getCategories(){
         const categories = await this.categoryRepository.find()
-        return this.withPath(categories)
+        return categories
     }
 
     async getById(id: string){
@@ -98,5 +62,5 @@ export class CategoriesService {
         return category
     }
 
-    //criar os metodos get (usando o metodo withpath), getbyid
+    
 }
