@@ -41,7 +41,18 @@ export class CategoriesController {
         const { id } = req.body
         const categoriesService = new CategoriesService()
         try{
-            const category = categoriesService.getById(id)
+            const category = await categoriesService.getById(id)
+            return res.json(category)
+        }catch(err){
+            return res.json(err.message)
+        }
+    }
+
+    async updateCategory(req: Request, res: Response): Promise<Response>{
+        const { name, id } = req.body
+        const categoriesService = new CategoriesService()
+        try{
+            const category = await categoriesService.update(name, id)
             return res.json(category)
         }catch(err){
             return res.json(err.message)
