@@ -34,8 +34,8 @@ export class CategoriesService {
     async remove (id: string){
 
         const subCategory = await this.categoryRepository.find({
-            select: ["parent_id"],
-            where: {parent_id: id}
+            select: ["parent_category"],
+            where: {parent_category: id}
         })
 
         const article = await this.articleRepository.find({
@@ -62,18 +62,18 @@ export class CategoriesService {
     }
 
     withPath(categories: Array<Category>){
-        const getParent = (categories: Array<Category>, parent_id:Object) => {
-            const parent = categories.filter(parent => parent.id === parent_id)
+        const getParent = (categories: Array<Category>, parent_category:Object) => {
+            const parent = categories.filter(parent => parent.id === parent_category)
             return parent.length ? parent[0] : null
         }
 
         const categoriesWithPath = categories.map(category => {
             let path = category.name
-            let parent = getParent(categories, category.parent_id)
+            let parent = getParent(categories, category.parent_category)
 
             while(parent){
                 path = `${parent.name} > ${path}`
-                parent = getParent(categories, parent.parent_id)
+                parent = getParent(categories, parent.parent_category)
             }
 
             return {...category, path}
