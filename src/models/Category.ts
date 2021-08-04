@@ -3,7 +3,6 @@ import { v4 as uuid } from "uuid"
 import { MaxLength, MinLength } from "class-validator"
 
 @Entity("categories")
-@Tree("closure-table")
 export class Category{
     
     @PrimaryColumn()
@@ -13,12 +12,6 @@ export class Category{
     @MinLength(2, {message: "Não atende à quantidade mínima de 2 carácteres."})
     @MaxLength(50, {message: "Ultrapassou a quantidade máxima de 50 carácteres."})
     name!: string;
-
-    @TreeChildren()
-    child_categories!: Category[];
-
-    @TreeParent()
-    parent_category!: Category;
 
     @CreateDateColumn()
     created_at!: Date;
