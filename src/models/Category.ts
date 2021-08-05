@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Tree,Entity, PrimaryColumn, UpdateDateColumn, TreeParent, TreeChildren, OneToMany, JoinColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn, TreeParent, TreeChildren, OneToMany, JoinColumn } from "typeorm"
 import { v4 as uuid } from "uuid"
 import { MaxLength, MinLength } from "class-validator"
 import { Article } from "./Article";
