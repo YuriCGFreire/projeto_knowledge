@@ -1,6 +1,5 @@
 import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm"
 import { v4 as uuid } from "uuid"
-
 import { Category } from "./Category";
 import { User } from "./User";
 import { Coment } from "./Coment";
@@ -27,8 +26,8 @@ export class Article{
     @Column({type: "text"})
     content!: string;
 
-    @ManyToOne(type => User, article => Article)
     @JoinColumn({ name: "user_id" })
+    @ManyToOne(type => User, article => Article)
     user!: User;
 
     @Column()
