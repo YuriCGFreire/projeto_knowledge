@@ -21,11 +21,10 @@ export class ArticlesService {
     }
 
     async createOrUpdate(objArticle:IcreateArticle){ //Método responsável por criar ou atualizar artigo
-        const article = {...objArticle}
-        this.articleRepository.create(article)
+        const article = this.articleRepository.create(objArticle)
         const errors = await validate(article)
 
-        if(article.id){//Caso eu receba o id, farei um update
+        if(!article.id || article.id == undefined){//Caso eu receba o id, farei um update
             if(errors.length == 0){
                 const {id, name, description, image_url, content} = article
                 await this.articleRepository
@@ -47,5 +46,19 @@ export class ArticlesService {
             return errors
         }
 
+    }
+
+    async getArticles(){
+        const articles = await this.articleRepository.find({
+            select: ["name", "category", "content", "description"]
+        })
+        return articles
+    }
+
+    async getById(id:string){
+        const article = await this.articleRepository.findOne({
+            select: ["id", "name", "description", "content"]
+        })
+        return article
     }
 }
