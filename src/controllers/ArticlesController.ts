@@ -25,4 +25,25 @@ export class ArticlesController {
         }
 
     }
+
+    async getArticles(req: Request, res: Response): Promise<Response>{
+        const articlesService = new ArticlesService()
+        try{
+            const articles = await articlesService.getArticles()
+            return res.json(articles)
+        }catch(err){
+            return res.json(err.message)
+        }
+    }
+
+    async getById(req: Request, res: Response): Promise<Response>{
+        const articlesService = new ArticlesService()
+        const id = req.params.id
+        try{
+            const article = await articlesService.getById(id)
+            return res.json(article)
+        }catch(err){
+            return res.json(err.message)
+        }
+    }
 }
