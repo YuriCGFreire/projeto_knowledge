@@ -1,4 +1,3 @@
-import { ArticleRepository } from "../repositories/ArticleRepository";
 import {Request, Response} from "express"
 import { ArticlesService } from "../services/ArticlesService";
 
@@ -42,6 +41,17 @@ export class ArticlesController {
         try{
             const article = await articlesService.getById(id)
             return res.json(article)
+        }catch(err){
+            return res.json(err.message)
+        }
+    }
+
+    async remove(req: Request, res: Response): Promise<Response>{
+        const id = req.params.id
+        const articlesService = new ArticlesService()
+        try{
+            const articleDeleted = await articlesService.remove(id)
+            return res.json(articleDeleted)
         }catch(err){
             return res.json(err.message)
         }
