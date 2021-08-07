@@ -5,6 +5,11 @@ import { validate } from "class-validator";
 import { Article } from "../models/Article";
 import { ArticleRepository } from "../repositories/ArticleRepository";
 
+interface ICategoryCreate{
+    id: string,
+    name: string
+}
+
 export class CategoriesService {
     private categoryRepository: Repository<Category>
     private articleRepository: Repository<Article>
@@ -14,15 +19,36 @@ export class CategoriesService {
         this.articleRepository = getCustomRepository(ArticleRepository)
     }
 
-    async create(objCategory: Object, name: Object){
+    async createOrUpdate(objCategory:ICategoryCreate){
+        const { id, name } = objCategory
         const categoryExists = await this.categoryRepository.findOne(name)
+        const category = this.categoryRepository.create(objCategory)
+        const errors = await validate(category)
 
-        if(categoryExists){
+        if(categoryExists){ //Verifico se a categoria existe.
             const msg = "Categoria já cadastrada."
             return msg
         }
-        const category = this.categoryRepository.create(objCategory)
-        const errors = await validate(category)
+
+        if(objCategory.id){ //Se tiver o id nos parametros, então eu faço um update ao invés de criar uma categoria  
+            if(errors.length == 0){
+                await this.categoryRepository
+                    .createQueryBuilder()
+                    .update(Category)
+                    .set({name: name})
+                    .where({id})
+                    .execute()
+                
+                const category = await this.categoryRepository.find({
+                    select: ["name"],
+                    where: {id}
+                })
+                return category
+            }else{
+                return errors
+            }         
+        }
+
         if(errors.length == 0){
             await this.categoryRepository.save(category)
             return category
@@ -62,17 +88,6 @@ export class CategoriesService {
             select: ["name", "id"],
             where: {id}
         })
-        return category
-    }
-
-    async update(id: string, name: string){
-        const category = await this.categoryRepository
-            .createQueryBuilder()
-            .update(Category)
-            .set({name: name})
-            .where({id})
-            .execute()
-
         return category
     }
 }
