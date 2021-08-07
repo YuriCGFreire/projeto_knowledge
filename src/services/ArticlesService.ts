@@ -50,15 +50,26 @@ export class ArticlesService {
 
     async getArticles(){
         const articles = await this.articleRepository.find({
-            select: ["name", "category", "content", "description"]
+            select: ["name", "category", "content", "description", "id"]
         })
         return articles
     }
 
     async getById(id:string){
         const article = await this.articleRepository.findOne({
-            select: ["id", "name", "description", "content"]
+            select: ["id", "name", "description", "content"],
+            where: {id}
         })
         return article
+    }
+
+    async remove(id:string){
+        const msg = "Artigo deletado."
+        await this.articleRepository.createQueryBuilder()
+            .delete()
+            .from(Article)
+            .where({id})
+            .execute()
+        return msg
     }
 }
