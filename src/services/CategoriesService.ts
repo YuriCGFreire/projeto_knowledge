@@ -78,9 +78,14 @@ export class CategoriesService {
         }   
     }
 
-    async getCategories(){
-        const categories = await this.categoryRepository.find()
-        return categories
+    async getCategories(page:number){
+        const limit = 10
+        const [categories, total] = await this.categoryRepository.find({
+            select: ["id", "name"],
+            take: limit, 
+            skip: page * limit - limit
+        })
+        return { data: categories, limit, count: total, page: page }
     }
 
     async getById(id: string){
