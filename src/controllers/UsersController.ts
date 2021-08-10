@@ -21,9 +21,10 @@ export class UsersController {
     }
 
     async getAllUsers(req: Request, res: Response): Promise<Response>{
+        const page:number = parseInt(req.query.page as any) || 1
         const usersService = new UsersService()
         try{
-            const users = await usersService.getAllUsers()
+            const users = await usersService.getAllUsers(page)
             return res.json(users)
         }catch(err){
             return res.json(err.message)
