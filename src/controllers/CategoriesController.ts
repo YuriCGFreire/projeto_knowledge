@@ -40,9 +40,10 @@ export class CategoriesController {
     }
 
     async getCategories(req: Request, res: Response): Promise<Response>{
+        const page:number = parseInt(req.query.page as any) || 1
         const categoriesService = new CategoriesService()
         try{
-            const categories = await categoriesService.getCategories()
+            const categories = await categoriesService.getCategories(page)
             return res.json(categories)
         }catch(err){
             return res.json(err.message)
