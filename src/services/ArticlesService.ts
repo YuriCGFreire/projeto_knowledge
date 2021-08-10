@@ -48,11 +48,15 @@ export class ArticlesService {
 
     }
 
-    async getArticles(){
-        const articles = await this.articleRepository.find({
-            select: ["name", "category", "content", "description", "id"]
+    async getArticles(page: number ){
+        const limit:number = 10
+        const [articles, total] = await this.articleRepository.findAndCount({
+            select:["id", "name", "description"],
+            take: limit,
+            skip: page * limit - limit
         })
-        return articles
+
+        return {data: articles, limit, count: total, page: page}
     }
 
     async getById(id:string){
