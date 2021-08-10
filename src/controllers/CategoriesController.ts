@@ -1,6 +1,5 @@
 import { CategoriesService } from "../services/CategoriesService";
 import { Request, Response } from "express";
-import { ObjectFlags } from "typescript";
 
 export class CategoriesController {
 

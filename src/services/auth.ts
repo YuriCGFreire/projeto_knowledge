@@ -1,0 +1,1 @@
+const {authSecret} = require("../../.env")
