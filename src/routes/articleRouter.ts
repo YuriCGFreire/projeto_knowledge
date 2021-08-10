@@ -3,9 +3,9 @@ import { ArticlesController } from "../controllers/ArticlesController";
 const articleRouter = Router()
 const articlesController = new ArticlesController()
 
+articleRouter.get('/', articlesController.getArticles)
 articleRouter.delete('/:id', articlesController.remove)
 articleRouter.post('/', articlesController.createOrUpdate)
-articleRouter.get('/', articlesController.getArticles)
 articleRouter.put("/:id", articlesController.createOrUpdate)
 articleRouter.get("/:id", articlesController.getById)
     
