@@ -1,4 +1,5 @@
 import {Request, Response} from "express"
+import { stringify } from "uuid";
 import { ArticlesService } from "../services/ArticlesService";
 
 export class ArticlesController {
@@ -26,9 +27,10 @@ export class ArticlesController {
     }
 
     async getArticles(req: Request, res: Response): Promise<Response>{
+        const page:number = parseInt(req.query.page as any) || 1
         const articlesService = new ArticlesService()
         try{
-            const articles = await articlesService.getArticles()
+            const articles = await articlesService.getArticles(page)
             return res.json(articles)
         }catch(err){
             return res.json(err.message)
