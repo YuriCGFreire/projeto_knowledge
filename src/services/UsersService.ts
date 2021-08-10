@@ -48,12 +48,15 @@ export class UsersService{
     }
     //criar método getAllUsers, updateUser, getUserByEmail
 
-    async getAllUsers(){
-        const allUsers = await this.usersRepository.find({
-            select: ["name", "email", "admin", "id"]
+    async getAllUsers(page: number){
+        const limit:number = 10
+        const [users, total] = await this.usersRepository.findAndCount({
+            select: ["name", "email", "admin", "id"],
+            take: limit, //número máximo de entidades que devem ser retornado
+            skip: page * limit - limit //a partir de qual entidade as outras entidades devem ser carregadas
         })
 
-        return allUsers
+        return {data: users, limit, count: total, page: page}
     }
 
     async getByEmail(email: string){
