@@ -66,7 +66,10 @@ export class ArticlesService {
             relations: ["user"]
         })
 
-        return {data: {id, name, description, content}, author: user.name}
+        return {
+            article: {id, name, description, content}, //propriedades do artigo
+            author: {name: user.name, id: user.id} //propriedades do autor do artigo
+        }
 
     }
 
