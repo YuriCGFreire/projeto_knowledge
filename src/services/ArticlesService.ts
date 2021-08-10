@@ -60,11 +60,14 @@ export class ArticlesService {
     }
 
     async getById(id:string){
-        const article = await this.articleRepository.findOne({
+        const {name, description, content, user}:any = await this.articleRepository.findOne({
             select: ["id", "name", "description", "content"],
-            where: {id}
+            where: {id},
+            relations: ["user"]
         })
-        return article
+
+        return {data: {id, name, description, content}, author: user.name}
+
     }
 
     async remove(id:string){
