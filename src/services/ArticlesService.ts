@@ -63,7 +63,7 @@ export class ArticlesService {
         const {name, description, content, user}:any = await this.articleRepository.findOne({
             select: ["id", "name", "description", "content"],
             where: {id},
-            relations: ["user"]
+            relations: ["user"] //retorna um user que tem relação com o artigo "puxado".
         })
 
         return {
