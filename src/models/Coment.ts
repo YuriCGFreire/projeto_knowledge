@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn, } from "typeorm";
 import { User } from "./User";
+import { MaxLength, MinLength } from "class-validator"
 import { Article } from "./Article";
 import {v4 as uuid} from "uuid"
 
@@ -10,6 +11,7 @@ export class Coment{
     id!: string;
 
     @Column()
+    @MaxLength(120, { message: "Atingiu a quantidade máxima de caracteres." })
     content!: string;
 
     @JoinColumn({name: "user_id"})
