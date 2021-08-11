@@ -2,6 +2,8 @@ import { Repository, getCustomRepository } from "typeorm";
 import { Article } from "../models/Article";
 import { ArticleRepository } from "../repositories/ArticleRepository";
 import {validate} from "class-validator"
+import { ComentRepository } from "../repositories/ComentRepository";
+import { Coment } from "../models/Coment";
 
 interface IcreateArticle{
     id?: string,
@@ -15,16 +17,18 @@ interface IcreateArticle{
 
 export class ArticlesService {
     private articleRepository: Repository<Article>
+    private comentRepository: Repository<Coment>
 
     constructor(){
         this.articleRepository = getCustomRepository(ArticleRepository)
+        this.comentRepository = getCustomRepository(ComentRepository)
     }
 
     async createOrUpdate(objArticle:IcreateArticle){ //Método responsável por criar ou atualizar artigo
         const article = this.articleRepository.create(objArticle)
         const errors = await validate(article)
 
-        if(!article.id || article.id == undefined){//Caso eu receba o id, farei um update
+        if(article.id){//Caso eu receba o id, farei um update
             if(errors.length == 0){
                 const {id, name, description, image_url, content} = article
                 await this.articleRepository
@@ -66,9 +70,18 @@ export class ArticlesService {
             relations: ["user", "category"] //retorna um user que tem relação com o artigo "puxado".
         })
 
+        const {coment, userComent}:any = await this.comentRepository.find({ //Isso tem uma cara imensa de gambiarra. Pqp!
+            select: ["content"],
+            where: {article_id: id},
+            relations: ["user"]
+        })
+
         return {
             article: {id, category: category.name, name, description, content}, //propriedades do artigo
-            author: {name: user.name, id: user.id} //propriedades do autor do artigo
+            author: {name: user.name, id: user.id}, //propriedades do autor do artigo
+            coments: [ //Propriedades dos comentários
+                {content: coment.content, user: userComent.name}
+            ]
         }
 
     }
