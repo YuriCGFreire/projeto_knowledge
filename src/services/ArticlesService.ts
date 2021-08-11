@@ -50,7 +50,7 @@ export class ArticlesService {
 
     async getArticles(page: number ){
         const limit:number = 10
-        const [articles, total] = await this.articleRepository.findAndCount({
+        const [articles, total]:any = await this.articleRepository.findAndCount({
             select:["id", "name", "description"],
             take: limit,
             skip: page * limit - limit
@@ -60,14 +60,14 @@ export class ArticlesService {
     }
 
     async getById(id:string){
-        const {name, description, content, user}:any = await this.articleRepository.findOne({
+        const {name, description, content, user, category}:any = await this.articleRepository.findOne({
             select: ["id", "name", "description", "content"],
             where: {id},
-            relations: ["user"] //retorna um user que tem relação com o artigo "puxado".
+            relations: ["user", "category"] //retorna um user que tem relação com o artigo "puxado".
         })
 
         return {
-            article: {id, name, description, content}, //propriedades do artigo
+            article: {id, category: category.name, name, description, content}, //propriedades do artigo
             author: {name: user.name, id: user.id} //propriedades do autor do artigo
         }
 
