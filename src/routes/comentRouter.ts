@@ -6,3 +6,5 @@ const comentsController = new ComentsController()
 comentRouter.post("/", comentsController.createOrUpdate)
 comentRouter.put("/:id", comentsController.createOrUpdate)
 comentRouter.delete("/", comentsController.delete)
+
+export {comentRouter}
