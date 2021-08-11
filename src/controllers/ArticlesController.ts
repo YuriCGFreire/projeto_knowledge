@@ -1,5 +1,4 @@
 import {Request, Response} from "express"
-import { stringify } from "uuid";
 import { ArticlesService } from "../services/ArticlesService";
 
 export class ArticlesController {
@@ -8,7 +7,7 @@ export class ArticlesController {
         const articlesService = new ArticlesService()
         if(req.params.id){
             try{
-                const id = req.params.id || undefined
+                const id = req.params.id
                 const {name, description, image_url, content} = article 
                 await articlesService.createOrUpdate({id, name, description, image_url, content})
                 return res.json(article)
