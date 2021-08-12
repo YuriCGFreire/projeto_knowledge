@@ -6,10 +6,9 @@ export class ComentsController{
     async createOrUpdate(req: Request, res: Response): Promise<Response>{
         const coment = {...req.body}
         const comentsService = new ComentsService()
-        if(req.params.id){ //pra atualizar comentário
+        if(coment.id){ //pra atualizar comentário
             try{
-                const id = req.params.id
-                const {user_id, content, article_id} = coment
+                const {id, user_id, content, article_id} = coment
                 await comentsService.createOrUpdateComent({ id, user_id, content, article_id })
                 return res.json(coment)
             }catch(err){
@@ -33,6 +32,17 @@ export class ComentsController{
             return res.json(comentDeleted)
         }catch(err){
             return res.json(err.messgae)
+        }
+    }
+
+    async getComentsFromArticle(req: Request, res: Response): Promise<Response>{
+        const article_id = req.params.id
+        const comentsService = new ComentsService()
+        try{
+            const coments = await comentsService.getComentsFromArticle(article_id)
+            return res.json(coments)
+        }catch(err){
+            return res.json(err.message)
         }
     }
 
