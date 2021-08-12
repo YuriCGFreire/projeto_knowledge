@@ -6,5 +6,6 @@ const comentsController = new ComentsController()
 comentRouter.post("/", comentsController.createOrUpdate)
 comentRouter.put("/:id", comentsController.createOrUpdate)
 comentRouter.delete("/", comentsController.delete)
+comentRouter.get("/:id", comentsController.getComentsFromArticle)
 
 export {comentRouter}
