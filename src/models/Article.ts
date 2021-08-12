@@ -33,8 +33,8 @@ export class Article{
     @Column()
     user_id!: string;
 
-    @ManyToOne(() => Category, article => Article)
     @JoinColumn({ name: "category_id" })    
+    @ManyToOne(() => Category, article => Article)
     category!: Category;
 
     @Column()
