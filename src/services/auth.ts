@@ -1,1 +1,1 @@
-const {authSecret} = require("../../.env")
+require("dotenv").config()
