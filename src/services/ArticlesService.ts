@@ -63,25 +63,18 @@ export class ArticlesService {
         return {data: articles, limit, count: total, page: page}
     }
 
+    
+
     async getById(id:string){
         const {name, description, content, user, category}:any = await this.articleRepository.findOne({
             select: ["id", "name", "description", "content"],
             where: {id},
-            relations: ["user", "category"] //retorna um user que tem relação com o artigo "puxado".
-        })
-
-        const {coment, userComent}:any = await this.comentRepository.find({ //Isso tem uma cara imensa de gambiarra. Pqp!
-            select: ["content"],
-            where: {article_id: id},
-            relations: ["user"]
+            relations: ["user", "category"] //retorna um user e uma categort que tenham relação com o artigo "puxado".
         })
 
         return {
             article: {id, category: category.name, name, description, content}, //propriedades do artigo
             author: {name: user.name, id: user.id}, //propriedades do autor do artigo
-            coments: [ //Propriedades dos comentários
-                {content: coment.content, user: userComent.name}
-            ]
         }
 
     }
