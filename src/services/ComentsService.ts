@@ -53,4 +53,21 @@ export class ComentsService {
             .execute()
         return msg
     }
+
+    async getComentsFromArticle(id:string){
+        const data = await this.comentRepository.find({
+            select: ["content"],
+            where: {article_id: id},
+            relations: ["user"]
+        })
+
+        const coments = data.map(coment => {
+            return {
+                name: coment.user.name,
+                content: coment.content
+            }
+        })
+
+        return coments
+    }
 }
