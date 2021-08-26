@@ -1,6 +1,6 @@
 require("dotenv").config()
 import {decode, encode} from "jwt-simple"
-import { compareSync } from "bcrypt-nodejs"
+const brcrypt = require("bcrypt-nodejs")
 import { getCustomRepository, Repository } from "typeorm"
 import { User } from "../models/User"
 import { UserRepository } from "../repositories/UserRepository"
@@ -23,13 +23,14 @@ export class AuthService{
         const user = await this.userRepository.findOne({
             where: {email: email}
         })
-
+        
         if(!user){
             const msg = "Usuário não cadastrado."
             return msg
         }
-
-        const isMatch = compareSync(user.password, password)
+        
+        const isMatch = await brcrypt.compareSync(password, user.password)
+        
         if(!isMatch){
             const msg = "Senha/Email inválidos."
             return msg
@@ -50,6 +51,8 @@ export class AuthService{
             ...payload,
             token: encode(payload, process.env.AUTH_SECRET as any)
         }
+        
+
     }
 
 }
