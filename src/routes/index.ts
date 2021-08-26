@@ -11,6 +11,6 @@ routes.use("/user", userRouter)
 routes.use("/category", categoryRouter)
 routes.use("/article", articleRouter)
 routes.use("/coment", comentRouter)
-routes.use("/signin", authRouter)
+routes.use("/login", authRouter)
 
 export {routes}
