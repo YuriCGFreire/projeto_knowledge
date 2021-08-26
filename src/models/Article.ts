@@ -21,31 +21,31 @@ export class Article{
     description!: string;
 
     @Column()
-    image_url!: string;
+    image_url: string;
 
     @Column({type: "text"})
-    content!: string;
+    content: string;
 
     @JoinColumn({ name: "user_id" })
     @ManyToOne(type => User, article => Article)
-    user!: User;
+    user: User;
 
     @Column()
-    user_id!: string;
+    user_id: string;
 
     @JoinColumn({ name: "category_id" })    
     @ManyToOne(() => Category, article => Article)
-    category!: Category;
+    category: Category;
 
     @Column()
-    category_id!: string;
+    category_id: string;
 
     @JoinColumn()
     @OneToMany(type => Coment, article => Article)
-    coment!: Coment;
+    coment: Coment;
 
     @CreateDateColumn()
-    created_at!: Date;
+    created_at: Date;
 
     @UpdateDateColumn()
     updated_at!: Date;
