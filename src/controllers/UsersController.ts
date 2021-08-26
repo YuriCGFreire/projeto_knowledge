@@ -5,16 +5,16 @@ import { UsersService } from "../services/UsersService";
 export class UsersController {
 
     async save(req: Request, res: Response): Promise<Response>{
-        const { name, email, bodyPassword, admin = false } = req.body
+        const user = {...req.body}
         const usersService = new UsersService()
         const encryptPassword = (password:string) => {
             const salt = genSaltSync(10)
             return hashSync(password, salt)
         }
-        const password = encryptPassword(bodyPassword)
+        user.password = encryptPassword(user.password)
         try{
-            const user = await usersService.create({name, email, password, admin})
-            return res.json(user)            
+            const savedUser = await usersService.create({...user})
+            return res.json(savedUser)            
         }catch(err){
             return res.json(err.message)
         }
