@@ -29,7 +29,7 @@ export class AuthService{
             return msg
         }
 
-        const isMatch = compareSync(password, user.password)
+        const isMatch = compareSync(user.password, password)
         if(!isMatch){
             const msg = "Senha/Email inválidos."
             return msg
