@@ -7,22 +7,22 @@ import { Article } from "./Article";
 export class Category{
     
     @PrimaryColumn()
-    id!: string;
+    id: string;
 
     @Column()
     @MinLength(2, {message: "Não atende à quantidade mínima de 2 carácteres."})
     @MaxLength(50, {message: "Ultrapassou a quantidade máxima de 50 carácteres."})
-    name!: string;
+    name: string;
 
     @OneToMany(type => Article, category => Category)
     @JoinColumn()
-    category!: Category;
+    category: Category;
 
     @CreateDateColumn()
-    created_at!: Date;
+    created_at: Date;
 
     @UpdateDateColumn()
-    updated_at!: Date;
+    updated_at: Date;
 
     constructor(){
         if(!this.id){
