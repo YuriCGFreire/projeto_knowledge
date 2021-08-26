@@ -6,6 +6,7 @@ export class AuthController{
     async signin(req: Request, res: Response): Promise<Response>{
         const {email, password} = req.body
         const authService = new AuthService()
+
         if(!email || !password){
             return res.json("Email ou senha inválidos.")
         }
