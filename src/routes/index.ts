@@ -2,15 +2,21 @@ import { Router } from "express";
 import { articleRouter } from "./articleRouter";
 import { categoryRouter } from "./categoryRouter";
 import { comentRouter } from "./comentRouter";
-import { userRouter } from "./userRouter";
-import { authRouter } from "./authRouter";
+import { userRouter, signupRouter } from "./userRouter";
+import { authRouter} from "./authRouter";
+import authMiddleware from "../middlewares/authMiddlewares"
 
 const routes = Router()
 
-routes.use("/user", userRouter)
-routes.use("/category", categoryRouter)
-routes.use("/article", articleRouter)
-routes.use("/coment", comentRouter)
-routes.use("/login", authRouter)
+
+//Não vão precisar do middleware
+routes.use("/signup", signupRouter)
+routes.use("/signin", authRouter)
+
+//Vão precisar do middleware
+routes.use("/user", authMiddleware,userRouter)
+routes.use("/category", authMiddleware,categoryRouter)
+routes.use("/article", authMiddleware,articleRouter)
+routes.use("/coment", authMiddleware,comentRouter)
 
 export {routes}
