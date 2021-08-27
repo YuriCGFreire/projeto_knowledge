@@ -1,8 +1,8 @@
 require("dotenv").config()
-import {decode, encode} from "jwt-simple"
 const brcrypt = require("bcrypt-nodejs")
 import { getCustomRepository, Repository } from "typeorm"
 import { User } from "../models/User"
+import { sign } from "jsonwebtoken"
 import { UserRepository } from "../repositories/UserRepository"
 
 
@@ -44,16 +44,14 @@ export class AuthService{
             email: user.email,
             admin: user.admin,
             iat: now,
-            exp: now + (60 * 60 * 24 * 5)
         }
 
+        const token = sign(payload, process.env.AUTH_SECRET as any, {expiresIn: "3d"})
+        
         return {
             ...payload,
-            token: encode(payload, process.env.AUTH_SECRET as any)
+            token
         }
-        
-
     }
-
 }
 
