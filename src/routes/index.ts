@@ -9,11 +9,11 @@ import authMiddleware from "../middlewares/authMiddlewares"
 const routes = Router()
 
 
-//Não vão precisar do middleware
+//Não vão precisar do middleware de autenticação
 routes.use("/signup", signupRouter)
 routes.use("/signin", authRouter)
 
-//Vão precisar do middleware
+//Vão precisar do middleware de autenticação
 routes.use("/user", authMiddleware,userRouter)
 routes.use("/category", authMiddleware,categoryRouter)
 routes.use("/article", authMiddleware,articleRouter)
