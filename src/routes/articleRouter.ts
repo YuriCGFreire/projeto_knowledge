@@ -4,11 +4,14 @@ import adminMiddleware from "../middlewares/adminMiddleware";
 const articleRouter = Router()
 const articlesController = new ArticlesController()
 
+//Usuário comum e admins conseguem acessar 
+articleRouter.get("/:id", articlesController.getById)
 articleRouter.get('/', articlesController.getArticles)
+
+//Para acessar as rotas abaixo precisa ser admin
 articleRouter.delete('/:id', adminMiddleware(articlesController.remove))
 articleRouter.post('/', adminMiddleware(articlesController.createOrUpdate))
 articleRouter.put("/:id", adminMiddleware(articlesController.createOrUpdate))
-articleRouter.get("/:id", articlesController.getById)
     
 
 export { articleRouter }
