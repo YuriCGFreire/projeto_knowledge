@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryColumn, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, PrimaryColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm"
 import { IsEmail, MaxLength, MinLength } from "class-validator"
 import {v4 as uuid} from "uuid"
 import { Coment } from "./Coment";
@@ -38,6 +38,9 @@ export class User{
 
     @UpdateDateColumn()
     updated_at: Date;
+
+    @DeleteDateColumn()
+    deleted_at: Date;
 
     constructor(){
         if(!this.id){
