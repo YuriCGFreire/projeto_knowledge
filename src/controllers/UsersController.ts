@@ -56,4 +56,15 @@ export class UsersController {
 
     }
 
+    async softDeleteUser(req: Request, res: Response): Promise<Response>{
+        const {id} = req.params
+        const usersService = new UsersService()
+        try{
+            const deletedUser = await usersService.softDeleteUser(id)
+            return res.json(deletedUser)
+        }catch(err){
+            return res.json(err.message)
+        }
+    }
+
 }
